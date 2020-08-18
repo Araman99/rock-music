@@ -28,7 +28,7 @@ async function getSong(searchValue) {
 function displayData(data) {
     lyricsShow.innerHTML = `
     <ul class="song-list">
-    ${data.data.slice(0,10).map(song => `<li>
+    ${data.data.slice(0,10).map(song => `<li style="list-style-type: none;">
                         <div class="single-result row align-items-center my-3 p-3">
                         <div class="col-md-3 my-2 p3">
                         <img src="${song.album.cover}">
