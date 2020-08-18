@@ -1,7 +1,9 @@
+//get document in variable
 const searchSong= document.getElementById("searchSong");
 const lyricsShow = document.getElementById("lyricsShow");
 const apiUrl = `https://api.lyrics.ovh`;
 
+//check valid search
 document.getElementById("searchBtn").addEventListener("click",e=>{
     e.preventDefault();
     const searchValue = searchSong.value.trim();
@@ -13,21 +15,25 @@ document.getElementById("searchBtn").addEventListener("click",e=>{
     }
 })
 
+//get promise
 async function getSong(searchValue) {
     const res = await fetch(`${apiUrl}/suggest/${searchValue}`)
     const data = await res.json();
 
-    showData(data);
+    displayData(data);
 
 }
 
-function showData(data) {
+//display song list
+function displayData(data) {
     lyricsShow.innerHTML = `
     <ul class="song-list">
     ${data.data.slice(0,10).map(song => `<li>
                         <div class="single-result row align-items-center my-3 p-3">
-                    <div class="col-md-9">
+                        <div class="col-md-3 my-2 p3">
                         <img src="${song.album.cover}">
+                    </div>
+                    <div class="col-md-6">
                         <h3 class="lyrics-name">${song.title}</h3>
                         <p class="author lead">Album by <span>${song.artist.name}</span></p>
                     </div>
@@ -41,6 +47,7 @@ function showData(data) {
     `
 }
 
+//lyrics button
 lyricsShow.addEventListener("click", e=>{
     const clickedElement = e.target;
     if (clickedElement.tagName === "span" || "button") {
@@ -51,6 +58,7 @@ lyricsShow.addEventListener("click", e=>{
     }
 })
 
+//display lyrics
 async function getLyrics(artist, songTitle) {
     const res = await fetch(`${apiUrl}/v1/${artist}/${songTitle}`);
     const data = await res.json(); 
